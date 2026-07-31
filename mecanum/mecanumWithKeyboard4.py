@@ -6,7 +6,8 @@ fr = Motor(forward=22, backward=23)
 bl = Motor(forward=24, backward=25)
 br = Motor(forward=5, backward=6)
 ru = Motor(forward=19, backward=16)
-ps = Motor(forward=26, backward=21)
+# ps = Motor(forward=26, backward=21) ... GPIOピンが悪くてできないかった。あとでこのピンについて調べてみよう！
+ps = Motor(forward=13, backward=12)
 ph = Motor(forward=20, backward=4)
 
 
