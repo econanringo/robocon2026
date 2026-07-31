@@ -38,14 +38,14 @@ def move_backward(speed=SPEED):
     br.backward(speed)
 
 
-def slide_right(speed=SPEED):
+def slide_left(speed=SPEED):
     fl.forward(speed)
     fr.backward(speed)
     bl.backward(speed)
     br.forward(speed)
 
 
-def slide_left(speed=SPEED):
+def slide_right(speed=SPEED):
     fl.backward(speed)
     fr.forward(speed)
     bl.forward(speed)
