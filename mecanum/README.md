@@ -5,3 +5,9 @@ gpiozeroとpygameを使って作りました。
 - mecanam.py シンプルにプログラムで動かすためのもの
 - mecanamWithKeyboard1, 2.py キーボードで動かすプログラム
 - mecanamWithKeyboard3.py ギヤードモーターを動かすプログラムも追加したもの
+
+# 動かし方
+- LXTerminalを開く
+```bash
+sudo python mecanamWithKeyboard.py
+```
