@@ -14,7 +14,7 @@ ru = Motor(forward=19, backward=16)
 # ps = Motor(forward=26, backward=21) ... GPIOピンが悪くてできないかった。あとでこのピンについて調べてみよう！
 ps = Motor(forward=13, backward=12)
 ph = Motor(forward=20, backward=4)
-servo = Servo(pin=13, initial_value=150)
+servo = Servo(pin=13, initial_value=0)
 
 SPEED = 0.6
 
@@ -89,10 +89,10 @@ def push_backward2(speed=SPEED):
     ph.backward(speed)
 
 def open_servo():
-    servo.value = 90
+    servo.value = 30
 
 def close_servo():
-    servo.value = 150
+    servo.value = 0
 
 # ----------------------------
 # pygame初期化
