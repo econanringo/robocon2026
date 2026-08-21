@@ -6,10 +6,10 @@ GPIOは全て変わる！！！
 要注意！！！！！
 """
 
-fl = Motor(forward=17, backward=18)
-fr = Motor(forward=22, backward=23)
-bl = Motor(forward=24, backward=25)
-br = Motor(forward=5, backward=6)
+fl = Motor(forward=4, backward=17)
+fr = Motor(forward=18, backward=23)
+bl = Motor(forward=27, backward=22)
+br = Motor(forward=24, backward=25)
 ru = Motor(forward=19, backward=16)
 # ps = Motor(forward=26, backward=21) ... GPIOピンが悪くてできないかった。あとでこのピンについて調べてみよう！
 ps = Motor(forward=13, backward=12)
