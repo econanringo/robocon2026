@@ -1,6 +1,11 @@
 import pygame
 from gpiozero import Motor, Servo
 
+"""
+GPIOは全て変わる！！！
+要注意！！！！！
+"""
+
 fl = Motor(forward=17, backward=18)
 fr = Motor(forward=22, backward=23)
 bl = Motor(forward=24, backward=25)
