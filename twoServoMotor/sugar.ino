@@ -5,8 +5,8 @@ const int BUTTON_PIN = 2; // ボタンを接続したピン
 const int SERVO_PIN  = 9; // サーボを接続したピン
 
 // 角度の定義
-const int ANGLE_START  = 0;   // 初期位置（0度）
-const int ANGLE_TARGET = 90;  // 回転後の位置（90度）
+const int ANGLE_START  = 0;   // 初期位置（0度） // TODO: 90
+const int ANGLE_TARGET = 90;  // 回転後の位置（90度）// TODO: 150
 
 Servo myServo;
 
