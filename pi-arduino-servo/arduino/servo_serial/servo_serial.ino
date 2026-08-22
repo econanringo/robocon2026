@@ -18,7 +18,7 @@
 #include <Servo.h>
 
 const int SERVO_PIN = 9;
-const int BAUD = 115200;
+const int BAUD = 8080;
 const int MIN_ANGLE = 0;
 const int MAX_ANGLE = 180;
 

@@ -1,5 +1,11 @@
+import sys
+from pathlib import Path
+
 import pygame
 from gpiozero import Motor, Servo
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "pi-arduino-servo"))
+from servo_control import find_port, open_arduino
 
 """
 GPIOは全て変わる！！！
@@ -94,6 +100,13 @@ def open_servo():
 def close_servo():
     servo.value = 0
 
+
+def set_arduino_servo(angle):
+    if arduino_ser is None:
+        return
+    arduino_ser.write(f"{angle}\n".encode("ascii"))
+    arduino_ser.flush()
+
 # ----------------------------
 # pygame初期化
 # ----------------------------
@@ -106,13 +119,32 @@ pygame.display.set_caption("Robot Controller")
 font = pygame.font.Font(None, 48)
 clock = pygame.time.Clock()
 
+arduino_ser = None
+arduino_at_90 = False
+try:
+    arduino_ser = open_arduino(find_port(None))
+    set_arduino_servo(0)
+except (SystemExit, OSError) as exc:
+    print(f"Arduino サーボ未接続: {exc}")
+    arduino_ser = None
+
 try:
     running = True
 
     while running:
+        arduino_command = None
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_9:
+                if arduino_at_90:
+                    set_arduino_servo(0)
+                    arduino_at_90 = False
+                    arduino_command = "9: ARDUINO 0"
+                else:
+                    set_arduino_servo(90)
+                    arduino_at_90 = True
+                    arduino_command = "9: ARDUINO 90"
 
         keys = pygame.key.get_pressed()
 
@@ -170,6 +202,9 @@ try:
         else:
             stop()
 
+        if arduino_command:
+            command = arduino_command
+
         screen.fill((30, 30, 30))
 
         text = font.render(command, True, (255, 255, 255))
@@ -184,4 +219,6 @@ try:
 
 finally:
     stop()
+    if arduino_ser is not None:
+        arduino_ser.close()
     pygame.quit()
