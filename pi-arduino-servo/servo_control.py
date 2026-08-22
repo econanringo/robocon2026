@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import argparse
 import glob
 import sys
 import time
@@ -18,12 +17,10 @@ DEFAULT_PORTS = (
     "/dev/ttyACM1",
     "/dev/ttyUSB1",
 )
+DEMO_ANGLES = (0, 90, 180, 90)
 
 
-def find_port(preferred: str | None) -> str:
-    if preferred:
-        return preferred
-
+def find_port() -> str:
     candidates = []
     for pattern in ("/dev/ttyACM*", "/dev/ttyUSB*"):
         candidates.extend(sorted(glob.glob(pattern)))
@@ -39,8 +36,7 @@ def find_port(preferred: str | None) -> str:
             continue
 
     raise SystemExit(
-        "Arduino のシリアルポートが見つかりません。"
-        " USB 接続を確認するか --port /dev/ttyACM0 を指定してください。"
+        "Arduino のシリアルポートが見つかりません。USB 接続を確認してください。"
     )
 
 
@@ -62,38 +58,13 @@ def send(ser: serial.Serial, command: str) -> str:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="Arduino D9 のサーボをシリアルで動かす"
-    )
-    parser.add_argument(
-        "angle",
-        nargs="?",
-        help="0-180 の角度。省略すると対話モード。center / sweep も可",
-    )
-    parser.add_argument("--port", help="例: /dev/ttyACM0")
-    args = parser.parse_args()
-
-    port = find_port(args.port)
+    port = find_port()
     print(f"接続: {port} @ {BAUD}")
 
     with open_arduino(port) as ser:
-        if args.angle is not None:
-            print(send(ser, args.angle))
-            return
-
-        print("角度を入力 (0-180 / center / sweep)。終了は q")
-        while True:
-            try:
-                command = input("> ").strip()
-            except (EOFError, KeyboardInterrupt):
-                print()
-                break
-            if not command or command.lower() in {"q", "quit", "exit"}:
-                break
-            try:
-                print(send(ser, command))
-            except SystemExit as exc:
-                print(exc)
+        for angle in DEMO_ANGLES:
+            print(send(ser, str(angle)))
+            time.sleep(1)
 
 
 if __name__ == "__main__":
