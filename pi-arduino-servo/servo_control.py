@@ -11,7 +11,7 @@ import time
 import serial
 
 
-BAUD = 115200
+BAUD = 8080
 DEFAULT_PORTS = (
     "/dev/ttyACM0",
     "/dev/ttyUSB0",
