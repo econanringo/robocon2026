@@ -22,10 +22,12 @@ fr = Motor(forward=18, backward=23)
 bl = Motor(forward=27, backward=22)
 br = Motor(forward=24, backward=25)
 
-ru = Motor(forward=19, backward=16)
+ru = Motor(forward=19, backward=26)
 
 # GPIO 26, 21 は使用しない
 ps = Motor(forward=13, backward=12)
+
+sl = Motor(forward=5, backward=6)
 
 SPEED = 0.6
 
@@ -41,6 +43,7 @@ def stop():
     br.stop()
     ru.stop()
     ps.stop()
+    sl.stop()
 
 
 # ----------------------------
@@ -112,6 +115,16 @@ def push_forward1(speed=SPEED):
 def push_backward1(speed=SPEED):
     ps.backward(speed)
 
+
+# ----------------------------
+#slide
+# ----------------------------
+
+def slide_forward(speed=SPEED):
+    sl.forward(speed)
+
+def slide_backward(speed=SPEED):
+    sl.backward(speed)
 
 # ----------------------------
 # Arduino サーボ
@@ -250,6 +263,15 @@ try:
             push_backward1()
             command = "4 : PUSH BACKWARD"
 
+        elif keys[pygame.K_5]:
+
+            slide_forward()
+            command = "5 : SLIDE FORWARD"
+
+        elif keys[pygame.K_6]:
+
+            slide_backward()
+            command = "6 : SLIDE BACKWARD"
         else:
 
             stop()
